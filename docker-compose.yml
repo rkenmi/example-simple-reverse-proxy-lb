@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+  readserver:
+    container_name: readserver
+    build:
+      context: ./reads
+    ports:
+      - "5000:5000"
+  writeserver:
+    container_name: writeserver
+    build:
+      context: ./writes
+    ports:
+      - "5001:5001"
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    depends_on:
+      - readserver
+      - writeserver
+    ports:
+      - "80:80"
